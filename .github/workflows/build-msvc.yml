@@ -1,0 +1,24 @@
+name: build-msvc-dll
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'reverb_bridge.cpp'
+      - 'CMakeLists.txt'
+      - '.github/workflows/build-msvc.yml'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure (CMake)
+        run: cmake -S . -B build -A x64
+      - name: Build
+        run: cmake --build build --config Release
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: reverbbridge-x64
+          path: build/bin/reverbbridge.dll
