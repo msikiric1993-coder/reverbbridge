@@ -1,0 +1,15 @@
+ReverbBridge — build options
+=============================
+A) Windows (MSVC) — simplest
+   1) Open 'x64 Native Tools Command Prompt for VS' (VS 2019/2022).
+   2) cmake -S . -B build -A x64
+   3) cmake --build build --config Release
+   4) Copy build\bin\reverbbridge.dll → Anomaly\bin\
+
+B) Cross‑compile (Linux) with MinGW‑w64 (produces Windows DLL without MSVC)
+   1) sudo apt-get install mingw-w64
+   2) x86_64-w64-mingw32-g++ -shared -O2 -static -static-libgcc -static-libstdc++ ^
+        -o reverbbridge.dll reverb_bridge.cpp -Wl,--out-implib,libreverbbridge.a
+   3) Copy reverbbridge.dll → Anomaly\bin\
+
+GitHub Actions (online build) is included in .github/workflows/build-msvc.yml (see below).
